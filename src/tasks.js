@@ -14,7 +14,7 @@ exports.getTasks = (req, res) => {
   db.collection("tasks")
     .get()
     .then((snapshot) => {
-      const taskList = snapshot.docs.map((doc) => {
+      const taskList = snapshot.doc.map((doc) => {
         let task = doc.data();
         task.id = doc.id;
         return task;
