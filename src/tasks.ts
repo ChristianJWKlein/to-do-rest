@@ -1,6 +1,7 @@
-const { connectDb } = require("./connectDb");
+import { connectDb } from "./connectDb"
+import { Request, Response } from 'express'
 
-exports.createTask = (req, res) => {
+export const createTask = (req: Request, res: Response) => {
   const newTask = {
     task: req.body.task,
     done: false,
@@ -12,7 +13,7 @@ exports.createTask = (req, res) => {
     .catch((err) => res.status(500).send(err));
 };
 
-exports.getTasks = (req, res) => {
+export const getTasks = (req: Request, res: Response) => {
   const db = connectDb();
   db.collection("tasks")
     .get()
@@ -27,7 +28,7 @@ exports.getTasks = (req, res) => {
     .catch((err) => res.status(500).send(err));
 };
 
-exports.updateTask = (req, res) => {
+export const updateTask = (req: Request, res: Response) => {
   const { taskId } = req.params;
   const isDone = req.body.done;
   const db = connectDb();
@@ -37,3 +38,13 @@ exports.updateTask = (req, res) => {
     .then((doc) => res.status(202).send(doc))
     .catch((err) => res.status(500).send(err));
 };
+
+// export const deleteTask = (req: Request, res: Response) => {
+//   const { task } = req.params.docId;
+//   const db = connectDb();
+//   db.collection("tasks")
+//     .doc(task)
+//     .delete()
+//     .then(() => res.status(204).send("Task Deleted"))
+//     .catch((err) => res.status(500).send(err));
+// };

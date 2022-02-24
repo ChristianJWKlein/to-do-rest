@@ -1,6 +1,6 @@
-const express = require("express");
-const cors = require("cors");
-const { getTasks, createTask, updateTask } = require("./src/tasks");
+import express from 'express';
+import cors from 'cors';
+import { getTasks, createTask, updateTask } from "./src/tasks";
 const PORT = process.env.PORT || 3000;
 
 const app = express();
@@ -11,6 +11,7 @@ app.use(express.json());
 app.post("/tasks", createTask);
 app.get("/tasks", getTasks);
 app.patch("/tasks/:taskId", updateTask);
+// app.delete("/tasks/:taskId", deleteTask);
 
 app.listen(PORT, () => {
   console.log("Listening on Port: ", PORT);
