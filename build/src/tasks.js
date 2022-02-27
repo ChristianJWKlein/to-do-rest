@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateTask = exports.getTasks = exports.createTask = void 0;
+exports.updateTask = exports.getNotDoneTasks = exports.getDoneTasks = exports.getTasks = exports.createTask = void 0;
 const connectDb_1 = require("./connectDb");
 const createTask = (req, res) => {
     const newTask = {
@@ -29,6 +29,38 @@ const getTasks = (req, res) => {
         .catch((err) => res.status(500).send(err));
 };
 exports.getTasks = getTasks;
+const getDoneTasks = (req, res) => {
+    const db = (0, connectDb_1.connectDb)();
+    db.collection("tasks")
+        .where("done", "==", true)
+        .get()
+        .then((snapshot) => {
+        const taskList = snapshot.docs.map((doc) => {
+            let task = doc.data();
+            task.id = doc.id;
+            return task;
+        });
+        res.send(taskList);
+    })
+        .catch((err) => res.status(500).send(err));
+};
+exports.getDoneTasks = getDoneTasks;
+const getNotDoneTasks = (req, res) => {
+    const db = (0, connectDb_1.connectDb)();
+    db.collection("tasks")
+        .where("done", "==", false)
+        .get()
+        .then((snapshot) => {
+        const taskList = snapshot.docs.map((doc) => {
+            let task = doc.data();
+            task.id = doc.id;
+            return task;
+        });
+        res.send(taskList);
+    })
+        .catch((err) => res.status(500).send(err));
+};
+exports.getNotDoneTasks = getNotDoneTasks;
 const updateTask = (req, res) => {
     const { taskId } = req.params;
     const isDone = req.body.done;

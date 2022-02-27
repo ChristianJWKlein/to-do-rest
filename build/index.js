@@ -13,6 +13,8 @@ app.use(express_1.default.json());
 //Routes
 app.post("/tasks", tasks_1.createTask);
 app.get("/tasks", tasks_1.getTasks);
+app.get("/tasks/notdone", tasks_1.getNotDoneTasks);
+app.get("/tasks/done", tasks_1.getDoneTasks);
 app.patch("/tasks/:taskId", tasks_1.updateTask);
 // app.delete("/tasks/:taskId", deleteTask);
 app.listen(PORT, () => {

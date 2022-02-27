@@ -1,5 +1,7 @@
 # API for todo list
 
+## nvm use 15
+
 ## To deploy into G Cloud Engine
 
 ### Transpile your Typescript into JS
@@ -28,4 +30,18 @@ cd into "build"
 
 You can now run:
 
-gcloud app build
+gcloud app deploy
+
+## Run locally
+
+npx ts-node index.ts
+
+## To rebuild
+
+tsc
+
+This will compile the ts --> js
+
+cd into build
+
+gcloud app deploy

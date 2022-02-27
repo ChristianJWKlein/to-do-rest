@@ -27,6 +27,37 @@ export const getTasks = (req: Request, res: Response) => {
     })
     .catch((err) => res.status(500).send(err));
 };
+export const getDoneTasks = (req: Request, res: Response) => {
+  const db = connectDb();
+  db.collection("tasks")
+    .where("done", "==", true)
+    .get()
+    .then((snapshot) => {
+      const taskList = snapshot.docs.map((doc) => {
+        let task = doc.data();
+        task.id = doc.id;
+        return task;
+      });
+      res.send(taskList);
+    })
+    .catch((err) => res.status(500).send(err));
+};
+
+export const getNotDoneTasks = (req: Request, res: Response) => {
+  const db = connectDb();
+  db.collection("tasks")
+    .where("done", "==", false)
+    .get()
+    .then((snapshot) => {
+      const taskList = snapshot.docs.map((doc) => {
+        let task = doc.data();
+        task.id = doc.id;
+        return task;
+      });
+      res.send(taskList);
+    })
+    .catch((err) => res.status(500).send(err));
+};
 
 export const updateTask = (req: Request, res: Response) => {
   const { taskId } = req.params;
